@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package etiquetaandrea;
+package origen;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,16 +37,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author GATEWAY1-
  */
-public class EtiqAndrealectura extends javax.swing.JFrame {
+public class Importarexcel extends javax.swing.JFrame {
 
     JFileChooser filechooser = new JFileChooser();
     JFileChooser filechooser2 = new JFileChooser();
     Connection sqlite;
-    String rutaaccess="";
+    String rutaaccess = "";
+
     /**
      * Creates new form EtiqAndrea
      */
-    public EtiqAndrealectura() {
+    public Importarexcel() {
         super("Conversor de Archivo de andrea a Excel");
         initComponents();
         this.setLocationRelativeTo(null);
@@ -54,6 +55,7 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
         filechooser.setFileFilter(filtro);
         FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Base de datos Access", "accdb");
         filechooser2.setFileFilter(filtro2);
+        cargabds();
     }
 
     /**
@@ -68,6 +70,10 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         archivo = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        archivo1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,31 +95,69 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
             }
         });
 
+        archivo1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        archivo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel1.setText("Base de datos de access:");
+
+        jLabel2.setText("Archivo Excel seleccionado");
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/1491313940-repeat_82991.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(archivo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(archivo, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(archivo, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(196, 196, 196)
+                                .addComponent(jButton1)
+                                .addGap(43, 43, 43)
+                                .addComponent(jButton3)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel3)))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(280, 280, 280)
-                .addComponent(jButton1)
-                .addGap(87, 87, 87)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(112, 112, 112)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(81, 81, 81)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(archivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(archivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -161,14 +205,23 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
                 // titulos de columnas
                 JOptionPane.showMessageDialog(null, "Proceso Completo!", "Athletic", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(EtiqAndrealectura.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Importarexcel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(EtiqAndrealectura.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Importarexcel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        actualizabds();
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void cargabds() {
         conexionaccess a = new conexionaccess();
         Connection c;
         try {
@@ -186,28 +239,54 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
                 int returnval = filechooser2.showOpenDialog(this);
                 if (returnval == JFileChooser.APPROVE_OPTION) {
                     File file = filechooser2.getSelectedFile();
-                    String ruta=file.getAbsolutePath();
+                    String ruta = file.getAbsolutePath();
+                    archivo1.setText(ruta);
                     con.setbd(sqlite, ruta);
-                    rutaaccess=ruta;
+                    rutaaccess = ruta;
                 }
             } else {
                 conexionlite con = new conexionlite();
                 sqlite = con.getconexionC(f.getAbsolutePath());
-                String resp=con.getbd(sqlite);
-                if(resp.equals("")){
+                String resp = con.getbd(sqlite);
+                if (resp.equals("")) {
                     JOptionPane.showMessageDialog(null, "CONEXION ERRONEA");
-                }else{
-                    conexionaccess cona= new conexionaccess();
-                    Connection acdb=cona.getConnection();
-                    cona.insertardato(acdb);
+                } else {
+//                    conexionaccess cona = new conexionaccess();
+//                    Connection acdb = cona.getConnection();
+//                    cona.insertardato(acdb);
+                    archivo1.setText(resp);
                 }
-                
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void actualizabds() {
+        conexionaccess a = new conexionaccess();
+        Connection c;
+        try {
+            int returnval = filechooser2.showOpenDialog(this);
+            if (returnval == JFileChooser.APPROVE_OPTION) {
+                File file = filechooser2.getSelectedFile();
+                String ruta = file.getAbsolutePath();
+                File f = new File("acess.db");
+                conexionlite con = new conexionlite();
+                sqlite = con.getconexionC(f.getAbsolutePath());
+                con.actualizaces(sqlite, ruta);
+                archivo1.setText(ruta);
+                JOptionPane.showMessageDialog(null, "ACTUALIZACION COMPLETA");
+
+            }
+//        c=a.getConnection();
+//        a.insertardato(c);
+//        a.Desconexion();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 
     private String cadena(String linea, int index) {
         String cadenas = "";
@@ -278,14 +357,18 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -294,14 +377,18 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EtiqAndrealectura().setVisible(true);
+                new Importarexcel().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel archivo;
+    private javax.swing.JLabel archivo1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

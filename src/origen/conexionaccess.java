@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package etiquetaandrea;
+package origen;
 
 /**
  *
@@ -29,6 +29,7 @@ public class conexionaccess {
             String Url = "jdbc:ucanaccess://" + rutafile;
             ccn = DriverManager.getConnection(Url);
             st = ccn.createStatement();
+            System.out.println("listo");
         } catch (SQLException e) {
             Logger.getLogger(conexionaccess.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "CONEXION ERRONEA " + e);
@@ -52,10 +53,13 @@ public class conexionaccess {
             ps1.executeUpdate();
             ps1.close();
             c.commit();
-        } catch (Exception e) {
-           
+        } catch (Exception e) { 
+            try {
+                c.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(conexionaccess.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }
 
 }

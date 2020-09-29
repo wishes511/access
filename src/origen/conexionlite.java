@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package etiquetaandrea;
+package origen;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -58,6 +58,24 @@ public class conexionlite {
         }
     }
 
+        public void actualizaces(Connection c, String ruta) {
+        PreparedStatement st;
+        try {
+            String q;
+            c.setAutoCommit(false);
+            st = c.prepareStatement("update Datos set localizarbd='"+ruta+"' where id=1");
+            st.executeUpdate();
+            c.commit();
+        } catch (Exception ex) {
+            try {
+                Logger.getLogger(conexionlite.class.getName()).log(Level.SEVERE, null, ex);
+                c.rollback();
+//                System.out.println("Algo esta mal en la bd \n" + ex.getMessage());
+            } catch (SQLException ex1) {
+                Logger.getLogger(conexionlite.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
     public String getbd(Connection c) {
         String resp = "";
         try {
