@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package etiquetaandrea;
+package origen;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,7 +37,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author GATEWAY1-
  */
-public class EtiqAndrealectura extends javax.swing.JFrame {
+public class Importarexcel extends javax.swing.JFrame {
 
     JFileChooser filechooser = new JFileChooser();
     JFileChooser filechooser2 = new JFileChooser();
@@ -46,7 +46,7 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
     /**
      * Creates new form EtiqAndrea
      */
-    public EtiqAndrealectura() {
+    public Importarexcel() {
         super("Conversor de Archivo de andrea a Excel");
         initComponents();
         this.setLocationRelativeTo(null);
@@ -161,9 +161,9 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
                 // titulos de columnas
                 JOptionPane.showMessageDialog(null, "Proceso Completo!", "Athletic", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(EtiqAndrealectura.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Importarexcel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(EtiqAndrealectura.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Importarexcel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -278,14 +278,18 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EtiqAndrealectura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Importarexcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -294,7 +298,7 @@ public class EtiqAndrealectura extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EtiqAndrealectura().setVisible(true);
+                new Importarexcel().setVisible(true);
             }
         });
     }
